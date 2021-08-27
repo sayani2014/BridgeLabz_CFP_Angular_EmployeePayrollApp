@@ -8,23 +8,25 @@ import { HeaderComponent } from './component/header/header.component';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
+import { AddFormComponent } from './component/add-form/add-form.component';
+import { AngularMaterialModule } from './material/angular-material/angular-material.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddComponent,
     HeaderComponent,
-    HomeComponent
+    HomeComponent,
+    AddFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    MatSliderModule,
-    FormsModule
+    FormsModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

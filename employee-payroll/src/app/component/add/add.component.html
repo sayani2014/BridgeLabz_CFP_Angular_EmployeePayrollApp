@@ -1,13 +1,18 @@
 <div class="form-content">
     <form class="form" (ngSubmit)="submit()">
+
         <div class="form-head">
             Employee Payroll Form
         </div>
+
+        <!-------Input Name--------->
         <div class="row-content">
             <label class="label text" for="name">Name</label>
             <input class="input" type="text" id="name" name="empName" placeholder="Your name" [(ngModel)]="employeeData.empName" required>
             <!-- <error-output class="text-error" for="text"></error-output> -->
         </div>
+
+        <!------Profile image---------->
         <div class="row-content">
             <label class="label text" for="profile">Profile Image</label>
             <div class="profile-radio-content">
@@ -29,15 +34,19 @@
                 </label>
             </div>
         </div>
+
+        <!-----Input Gender--------->
         <div class="row-content">
             <label class="label text" for="gender">Gender</label>
             <div>
-                <input type="radio" id="male" name="empGender" value="male" [(ngModel)]="employeeData.empGender">
+                <input type="radio" id="male" name="empGender" value="Male" [(ngModel)]="employeeData.empGender">
                 <label class="text" for="male">Male</label>
-                <input type="radio" id="female" name="empGender" value="female" [(ngModel)]="employeeData.empGender">
+                <input type="radio" id="female" name="empGender" value="Female" [(ngModel)]="employeeData.empGender">
                 <label class="text" for="female">Female</label>
             </div>
         </div>
+
+        <!------Input Department------->
         <div class="row-content">
             <label class="label text" for="department">Department</label>
             <div>
@@ -53,14 +62,18 @@
                 <label class="text" for="others">Others</label>
             </div>
         </div>
+
+        <!-----Input Salary------>
         <div class="row-content">
             <label class="label text" for="salary">Choose Your Salary</label>
             <!-- <input class="input" type="range" name="salary" id="salary" min="300000" max="5000000" step="100" value="4000000" required> -->
             <!-- <output class="salary-output" for="salary">4000000</output> -->
-            <mat-slider thumbLabel [displayWith]="formatLabel" step="100" min="300000" max="5000000" aria-label="units">
-                                    <!-- [(ngModel)]="employeeData.empSalary"> -->
+            <mat-slider thumbLabel [displayWith]="formatLabel" step="100" min="300000" max="5000000" aria-label="units"
+                                    [(ngModel)]="employeeData.empSalary">
             </mat-slider>
         </div>
+
+        <!----Input Date----->
         <div class="row-content">
             <label class="label text" for="startDate">Start Date</label>
             <div id="date">
@@ -100,18 +113,18 @@
                 </select>
                 <select id="month" name="Month">
                     <option value="Month">Month</option>
-                    <option value='01'>January</option>
-                    <option value='02'>February</option>
-                    <option value='03'>March</option>
-                    <option value='04'>April</option>
+                    <option value='01'>Jan</option>
+                    <option value='02'>Feb</option>
+                    <option value='03'>Mar</option>
+                    <option value='04'>Apr</option>
                     <option value='05'>May</option>
-                    <option value='06'>June</option>
-                    <option value='07'>July</option>
-                    <option value='08'>August</option>
-                    <option value='09'>September</option>
-                    <option value='10'>October</option>
-                    <option value='11'>November</option>
-                    <option value='12'>December</option>
+                    <option value='06'>Jun</option>
+                    <option value='07'>Jul</option>
+                    <option value='08'>Aug</option>
+                    <option value='09'>Sep</option>
+                    <option value='10'>Oct</option>
+                    <option value='11'>Nov</option>
+                    <option value='12'>Dec</option>
                 </select>
                 <select id="year" name="Year">
                     <option value="Year">Year</option>
@@ -123,12 +136,15 @@
                     <option value='2016'>2016</option>
                 </select>
             </div>
-            <!-- <error-output class="date-error" for="text"></error-output> -->
         </div>  
+
+        <!------Input Notes------->
         <div class="row-content">
             <label class="label text" for="notes">Notes</label>
             <textarea id="notes" class="input" name="note" style="height:100px;" [(ngModel)]="employeeData.note"></textarea>
         </div>   
+
+        <!------Buttons----->
         <div class="buttonParent">
             <a class="resetButton button cancelButton" routerLink="/home">Cancel</a>
             <div class="submit-reset">
