@@ -7,7 +7,8 @@
 4. Modify the AddEmployee page of the Employee Payroll App with the Angular Material and add the HTTP delete() to delete employee details from the database.
 5. Ability 
     - To add the HTTP put() to edit employee details from the database.
-    - Validate employee payroll form.
+    - Add validation for all the employee payroll form fields.
     - Update the user with error message.
     - Update the user with service response message.
     - Apply the Pipe concept for date.
+    - Update the UI design.
