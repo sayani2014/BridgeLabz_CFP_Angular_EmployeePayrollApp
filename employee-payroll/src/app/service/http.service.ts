@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Employee } from '../model/employee';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,7 @@ export class HttpService {
    */
 
   postEmployeeData(data): Observable<any> {
+    console.log(data);
     return this.httpClient.post(this.baseURL + "addEmployeeDetails", data);
   }
 
@@ -52,7 +54,7 @@ export class HttpService {
    * @returns the put request response.
    */
 
-  updateEmployeeData(id, data): Observable<any> {
+  updateEmployeeData(id: number, data: Employee): Observable<any> {
     return this.httpClient.put(this.baseURL + "updateEmployeeDetails?id=" +id, data);
   }
 }

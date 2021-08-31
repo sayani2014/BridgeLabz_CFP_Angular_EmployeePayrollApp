@@ -132,7 +132,6 @@ export class AddFormComponent implements OnInit {
    * This method is called when the update() is hit in the HOME page.
    */
   ngOnInit(): void { 
-    console.log(this.employeeFormGroup.get('department').value);
     if(this.route.snapshot.params['id'] != undefined) {
       this.dataService.currentEmployee.subscribe(employee => {
         if(Object.keys(employee).length !== 0) {
@@ -154,9 +153,9 @@ export class AddFormComponent implements OnInit {
             }
           });
           // this.employeeFormGroup.get('empName')?.setValue(employee.empName);
-          // this.employeeFormGroup.get('profilePic').setValue(employee.profilePic);
-          // this.employeeFormGroup.get('empGender').setValue(employee.empGender);
-          // this.employeeFormGroup.get('empSalary').setValue(employee.empSalary);
+          // this.employeeFormGroup.get('profilePic')?.setValue(employee.profilePic);
+          // this.employeeFormGroup.get('empGender')?.setValue(employee.empGender);
+          // this.employeeFormGroup.get('empSalary')?.setValue(employee.empSalary);
           // this.employeeFormGroup.get('startDate')?.setValue(employee.startDate);
           // this.employeeFormGroup.get('note')?.setValue(employee.note);
         }   
@@ -189,8 +188,14 @@ export class AddFormComponent implements OnInit {
    * Finally the page gets redirected to the home page and a message is displayed to the user.
    */
   onSubmit() { 
-    if(this.employeeFormGroup.invalid) {
-      
+    var dateString = this.employeeFormGroup.get('startDate').value;
+    var myDate = new Date(dateString);
+    var today = new Date();
+    if ( myDate > today ) { 
+      this.message = "StartDate should not be future date. It should be past or today's date.";
+      this.openDialog(this.message);
+    }
+    if(this.employeeFormGroup.invalid) { 
       if(this.employeeFormGroup.get('department').value.length == 0) {
         this.message = "Department is empty";
         this.openDialog(this.message);
@@ -206,11 +211,11 @@ export class AddFormComponent implements OnInit {
       this.employee = this.employeeFormGroup.value;
       if(this.route.snapshot.params['id'] != undefined) {
         this.httpService.updateEmployeeData(this.route.snapshot.params['id'], this.employee).subscribe(data=>{
-            console.log(data);
-            this.message = data.message;
-            this.openDialog(this.message);
-            this.router.navigateByUrl("/home"); 
-          })
+          console.log(data);
+          this.message = data.message;
+          this.openDialog(this.message);
+          this.router.navigateByUrl("/home"); 
+        });
       }
       else { 
         this.httpService.postEmployeeData(this.employee).subscribe(res=>{
@@ -218,7 +223,7 @@ export class AddFormComponent implements OnInit {
           this.message = res.message; 
           this.openDialog(this.message);
           this.router.navigateByUrl("/home"); 
-        })
+        });
       }
     }
   }
