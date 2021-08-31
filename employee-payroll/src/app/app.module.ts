@@ -8,9 +8,11 @@ import { HeaderComponent } from './component/header/header.component';
 import { HomeComponent } from './component/home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddFormComponent } from './component/add-form/add-form.component';
 import { AngularMaterialModule } from './material/angular-material/angular-material.module';
+import { DateFormatPipePipe } from './pipe/date-format-pipe.pipe';
+import { DialogBoxComponent } from './component/dialog-box/dialog-box.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +20,9 @@ import { AngularMaterialModule } from './material/angular-material/angular-mater
     AddComponent,
     HeaderComponent,
     HomeComponent,
-    AddFormComponent
+    AddFormComponent,
+    DateFormatPipePipe,
+    DialogBoxComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +30,8 @@ import { AngularMaterialModule } from './material/angular-material/angular-mater
     HttpClientModule,
     BrowserAnimationsModule,
     FormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,5 +1,5 @@
 <div class="form-content">
-    <form class="form">
+    <form class="form" [formGroup]="employeeFormGroup" (ngSubmit)="onSubmit()">
   
         <div class="form-head">
             Employee Payroll form 
@@ -9,7 +9,10 @@
         <div class="row-content">
             <mat-label class="label text" for="name">Name</mat-label>
             <mat-form-field class="example-full-width" appearance="outline">
-                <input id="name" class="name-input" matInput placeholder="Your name" required>
+                <input class="name-input" matInput placeholder="Your name" ngDefaultControl formControlName="empName">
+            
+                <mat-error *ngIf="checkError('empName', 'required')">Name is required</mat-error>
+                <mat-error *ngIf="checkError('empName', 'pattern')">Name should start with upper case and should have minimum of 3 characters</mat-error>
             </mat-form-field>
         </div>
 
@@ -17,22 +20,24 @@
         <div class="row-content">
             <mat-label class="label text" for="profile">Profile Image </mat-label>
             <div class="profile-radio-content">
-                <mat-radio-button class=profile-width id="profile1" name="profile" color="primary"
-                    value="../assets/profile-images/Ellipse -3.png" required>
-                    <img class="profile" id='image1' src="../assets/profile-images/Ellipse -3.png">
-                </mat-radio-button>
-                <mat-radio-button class=profile-width id="profile2" name="profile" color="primary"
-                    value="../assets/profile-images/Ellipse 1.png" required>
-                    <img class="profile" id='image2' src="../assets/profile-images/Ellipse 1.png">
-                </mat-radio-button>
-                <mat-radio-button class=profile-width id="profile3" name="profile" color="primary"
-                    value="../assets/profile-images/Ellipse -8.png" required>
-                    <img class="profile" id='image3' src="../assets/profile-images/Ellipse -8.png">
-                </mat-radio-button>
-                <mat-radio-button class=profile-width id="profile4" name="profile" color="primary"
-                    value="../assets/profile-images/Ellipse -7.png" required>
-                    <img class="profile" id='image4' src="../assets/profile-images/Ellipse -7.png">
-                </mat-radio-button>
+                <mat-radio-group ngDefaultControl formControlName="profilePic">
+                    <mat-radio-button name="profile" color="primary"
+                        value="../assets/profile-images/Ellipse -3.png" >
+                        <img class="profile" id='image1' src="../assets/profile-images/Ellipse -3.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary"
+                        value="../assets/profile-images/Ellipse 1.png" >
+                        <img class="profile" id='image2' src="../assets/profile-images/Ellipse 1.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary"
+                        value="../assets/profile-images/Ellipse -8.png">
+                        <img class="profile" id='image3' src="../assets/profile-images/Ellipse -8.png">
+                    </mat-radio-button>
+                    <mat-radio-button name="profile" color="primary"
+                        value="../assets/profile-images/Ellipse -7.png">
+                        <img class="profile" id='image4' src="../assets/profile-images/Ellipse -7.png">
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
         </div>
   
@@ -40,114 +45,54 @@
         <div class="row-content">
             <mat-label class="label text" for="gender">Gender</mat-label>
             <div>
-                <mat-radio-button type="radio" id="male" name="gender" color="primary" value="Male" required>
-                    <mat-label class="text" for="male">Male</mat-label>
-                </mat-radio-button>
-                <mat-radio-button type="radio" id="female" name="gender" color="primary" value="Female" required>
-                    <mat-label class="text" for="female">Female</mat-label>
-                </mat-radio-button>
+                <mat-radio-group ngDefaultControl formControlName="empGender">
+                    <mat-radio-button name="gender" color="primary" value="Male">
+                        <mat-label class="text" for="male">Male</mat-label>
+                    </mat-radio-button>
+                    <mat-radio-button name="gender" color="primary" value="Female">
+                        <mat-label class="text" for="female">Female</mat-label>
+                    </mat-radio-button>
+                </mat-radio-group>
             </div>
         </div>
 
         <!------Input Department------->
         <div class="row-content">
             <mat-label class="label text" for="depatment">Department</mat-label>
-            <mat-checkbox class="checkbox" id="hr" name="department" value="HR">
-                <mat-label class="text" for="hr">HR</mat-label>
-            </mat-checkbox>
-            <mat-checkbox class="checkbox" id="sales" name="department" value="Sales">
-                <mat-label class="text" for="sales">Sales</mat-label>
-            </mat-checkbox>
-            <mat-checkbox class="checkbox" id="finance" name="department" value="Finance">
-                <mat-label class="text" for="finance">Finance</mat-label>
-            </mat-checkbox>
-            <mat-checkbox class="checkbox" id="engineer" name="department" value="Engineer">
-                <mat-label class="text" for="engineer">Engineer</mat-label>
-            </mat-checkbox>
-            <mat-checkbox class="checkbox" id="others" name="department" value="Others">
-                <mat-label class="text" for="others">Others</mat-label>
-            </mat-checkbox>
+            <div *ngFor="let departmentData of departments">
+                <mat-label>
+                    <mat-checkbox class="checkbox" [value]="departmentData.value" (change)="onCheckboxChange($event)" [checked]="departmentData.checked">
+                        {{departmentData.name}}
+                    </mat-checkbox>
+                </mat-label>
+            </div>
         </div>
 
         <!-----Input Salary------>
         <div class="row-content">
             <mat-label class="label text" for="salary">Choose your Salary </mat-label>
-            <mat-slider thumbLabel [displayWith]="formatLabel" color="primary" tickInterval="1000" aria-label="units" 
-                        class="salary-input" name="salary" min="300000" max="500000" step="1000" value="400000">
-                <output class="salary-output text" for="salary">400000</output>
+            <mat-slider thumbLabel [displayWith]="formatLabel" #salaryOutput (change)="updateSetting($event)" color="primary"
+                        tickInterval="1000" aria-label="units" class="salary-input" name="salary" min="300000" max="500000" step="1000"
+                        [value]="salaryOutput" formControlName="empSalary">
             </mat-slider>
         </div>
 
         <!----Input Date----->
         <div class="row-content">
-            <mat-label class="label text" for="startDate">Start Date</mat-label>
-            <div id="date">
-                <select id="day" name="Day">
-                    <option value="Day">Day</option>
-                    <option value='01'>01</option>
-                    <option value='02'>02</option>
-                    <option value='03'>03</option>
-                    <option value='04'>04</option>
-                    <option value='05'>05</option>
-                    <option value='06'>06</option>
-                    <option value='07'>07</option>
-                    <option value='08'>08</option>
-                    <option value='09'>09</option>
-                    <option value='10'>10</option>
-                    <option value='11'>11</option>
-                    <option value='12'>12</option>
-                    <option value='13'>13</option>
-                    <option value='14'>14</option>
-                    <option value='15'>15</option>
-                    <option value='16'>16</option>
-                    <option value='17'>17</option>
-                    <option value='18'>18</option>
-                    <option value='19'>19</option>
-                    <option value='20'>20</option>
-                    <option value='21'>21</option>
-                    <option value='22'>22</option>
-                    <option value='23'>23</option>
-                    <option value='24'>24</option>
-                    <option value='25'>25</option>
-                    <option value='26'>26</option>
-                    <option value='27'>27</option>
-                    <option value='28'>28</option>
-                    <option value='29'>29</option>
-                    <option value='30'>30</option>
-                    <option value='31'>31</option>
-                </select>
-                <select id="month" name="Month">
-                    <option value="Month">Month</option>
-                    <option value='01'>Jan</option>
-                    <option value='02'>Feb</option>
-                    <option value='03'>Mar</option>
-                    <option value='04'>Apr</option>
-                    <option value='05'>May</option>
-                    <option value='06'>Jun</option>
-                    <option value='07'>Jul</option>
-                    <option value='08'>Aug</option>
-                    <option value='09'>Sep</option>
-                    <option value='10'>Oct</option>
-                    <option value='11'>Nov</option>
-                    <option value='12'>Dec</option>
-                </select>
-                <select id="year" name="Year">
-                    <option value="Year">Year</option>
-                    <option value='2021'>2021</option>
-                    <option value='2020'>2020</option>
-                    <option value='2019'>2019</option>
-                    <option value='2018'>2018</option>
-                    <option value='2017'>2017</option>
-                    <option value='2016'>2016</option>
-                </select>
-            </div>
-        </div>  
+            <label class="label text" for="startDate"> Start Date </label>
+            <mat-form-field>
+              <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="startDate">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
   
         <!------Input Notes------->
         <div class="row-content">
             <mat-label class="label text" for="note">Notes</mat-label>
             <mat-form-field class="example-full-width" appearance="outline">
-                <textarea matInput id="notes" class="=input" style="height:100px"></textarea>
+                <textarea matInput class="input" style="height:100px" ngDefaultControl formControlName="note"></textarea>
+                <mat-error *ngIf="checkError('note', 'required')">Note is required</mat-error>
             </mat-form-field>
         </div>
 

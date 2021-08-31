@@ -39,7 +39,10 @@ export class HttpService {
    */
 
   deleteEmployeeData(id): Observable<any> {
-    return this.httpClient.delete(this.baseURL + "deleteEmployeeDetails?id=" +id);
+    return this.httpClient.delete(this.baseURL + "deleteEmployeeDetails",{
+      headers: new HttpHeaders(),
+      params: new HttpParams().append('id', id),
+    });
   }
 
   /**

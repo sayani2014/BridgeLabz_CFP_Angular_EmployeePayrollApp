@@ -11,7 +11,7 @@
         <!--Add button
             When clicked the add component page is rendered.
         -->
-        <a class="add-button" routerLink="/add">
+        <a class="add-button" routerLink="/addform">
             <img src="../assets/icons/add-24px.svg" alt="">Add User
         </a>
     </div>
@@ -44,8 +44,8 @@
                         {{department}}
                     </div>
                 </td>
-                <td>{{employee.empSalary}}</td>
-                <td>{{employee.startDate}}</td>
+                <td>&#8377; {{employee.empSalary}}</td>
+                <td>{{employee.startDate | dateFormatPipe}}</td>
 
                 <!--To update and delete an employee from the database-->
                 <td>
