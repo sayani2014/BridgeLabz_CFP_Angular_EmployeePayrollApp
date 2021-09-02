@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormArray, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,10 +7,11 @@ import { DataService } from 'src/app/service/data.service';
 import { HttpService } from 'src/app/service/http.service';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 
+
 @Component({
   selector: 'app-add-form',
   templateUrl: './add-form.component.html',
-  styleUrls: ['./add-form.component.scss']
+  styleUrls: ['./add-form.component.scss'],
 })
 export class AddFormComponent implements OnInit {
 
@@ -173,6 +174,8 @@ export class AddFormComponent implements OnInit {
   openDialog(data) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.data = data;
+    dialogConfig.height='30%';
+    dialogConfig.width='30%';
     const dialogRef = this.dialog.open(DialogBoxComponent, dialogConfig);
     setTimeout(() => {
       dialogRef.close();
@@ -190,9 +193,12 @@ export class AddFormComponent implements OnInit {
   onSubmit() { 
     var dateString = this.employeeFormGroup.get('startDate').value;
     var myDate = new Date(dateString);
+    myDate.setDate(myDate.getDate() + 1);
+    console.log(myDate);
+    this.employeeFormGroup.get('startDate')?.setValue(myDate);
     var today = new Date();
     if ( myDate > today ) { 
-      this.message = "StartDate should not be future date. It should be past or today's date.";
+      this.message = "StartDate should not be future date.";
       this.openDialog(this.message);
     }
     if(this.employeeFormGroup.invalid) { 
@@ -201,9 +207,7 @@ export class AddFormComponent implements OnInit {
         this.openDialog(this.message);
       }
       else {
-        this.message = "1. Profile Pic required" + "\n" +
-                       "2. Gender required" + "\n" +
-                       "3. Min Wage should be more than 10000";
+        this.message = "1. Profile Pic required \n 2. Gender required \n 3. Min Wage should be more than 10000";
         this.openDialog(this.message);
       }
     }
@@ -218,6 +222,7 @@ export class AddFormComponent implements OnInit {
         });
       }
       else { 
+      
         this.httpService.postEmployeeData(this.employee).subscribe(res=>{
           console.log(res); 
           this.message = res.message; 
