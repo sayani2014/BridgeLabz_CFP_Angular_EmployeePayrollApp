@@ -7,7 +7,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./dialog-box.component.scss']
 })
 export class DialogBoxComponent implements OnInit {
-  description:string;
+  public description: string;
 
   constructor(
     private dialogRef: MatDialogRef<DialogBoxComponent>,
@@ -19,3 +19,4 @@ export class DialogBoxComponent implements OnInit {
   }
 
 }
+
