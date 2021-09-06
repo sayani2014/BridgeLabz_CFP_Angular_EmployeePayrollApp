@@ -8,7 +8,7 @@
 5. Ability 
     - To add the HTTP put() to edit employee details from the database.
     - Add validation for all the employee payroll form fields.
-    - Update the user with error message.
-    - Update the user with service response message.
+    - Update the user with error message using dialog-box.
+    - Update the user with service response message using dialog-box.
     - Apply the Pipe concept for date.
     - Update the UI design.
